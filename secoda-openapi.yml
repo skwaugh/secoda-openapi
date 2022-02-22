@@ -289,12 +289,16 @@ components:
       properties:
         id:
           type: string
+      x-tags:
+        - table
     Dictionary:
       title: Dictionary
       type: object
       properties:
         id:
           type: string
+      x-tags:
+        - dictionary
     Term:
       type: object
       x-examples:
@@ -321,6 +325,18 @@ components:
       properties:
         id:
           type: string
+        name:
+          type: string
+        owners:
+          type: array
+          items:
+            $ref: '#/components/schemas/Owner'
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Collection'
+      x-tags:
+        - column
     Owner:
       title: Owner
       type: object
@@ -330,12 +346,14 @@ components:
         email:
           type: string
           format: email
-    Collection:
-      title: Collection
+    Tag:
+      title: Tag
       type: object
       properties:
         id:
           type: string
+      x-tags:
+        - collection
     User:
       description: ''
       type: object
@@ -359,6 +377,8 @@ components:
       required:
         - email
         - role
+      x-tags:
+        - user
   securitySchemes:
     secoda-api-key:
       type: apiKey
