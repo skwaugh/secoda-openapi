@@ -1,0 +1,15 @@
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    name: publish
+    steps:
+
+      # first checkout your code
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # then use redoc-cli-github-action to generate your HTML bundle
+      - name: redoc-cli publish
+        uses: seeebiii/redoc-cli-github-action@v10
+        with:
+          args: 'bundle secoda-openapi.yml -o docs/secoda-openapi.html'
