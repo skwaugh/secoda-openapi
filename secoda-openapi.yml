@@ -1,0 +1,336 @@
+openapi: 3.0.0
+info:
+  title: secoda-api
+  contact:
+    name: Sawyer Waugh
+  version: '1.0'
+  description: Ported from official documentation
+servers:
+  - url: 'https://api.secoda.co'
+    description: prod
+tags:
+  - name: table
+    description: Resources classified as Tables
+    externalDocs:
+      url: 'http://docs.my-api.com/pet-operations.htm'
+  - name: column
+    description: Fields originating in Table Resources
+    externalDocs:
+      url: 'http://docs.my-api.com/store-orders.htm'
+  - name: dictionary
+    description: A curated collection of org-defined terms
+    externalDocs:
+      url: 'http://docs.my-api.com/store-orders.htm'
+  - name: collection
+    description: 'Resources, docs and questions grouped by tag'
+    externalDocs:
+      url: 'http://docs.my-api.com/store-orders.htm'
+paths:
+  /table:
+    get:
+      summary: List All Tables
+      tags:
+        - table
+      responses:
+        '200':
+          description: OK
+      operationId: get-tables
+      description: List All Tables
+    parameters: []
+    post:
+      summary: Create New Table
+      operationId: post-table
+      responses:
+        '200':
+          description: OK
+      description: Create New Table
+      tags:
+        - table
+  '/table/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: The id of the table
+    get:
+      summary: Get Specific Table
+      tags:
+        - table
+      responses:
+        '200':
+          description: OK
+      operationId: get-table-id
+      description: Get table by id
+    put:
+      summary: Update Table
+      operationId: put-table-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  msg:
+                    type: string
+                    minLength: 1
+                required:
+                  - msg
+                x-examples:
+                  example-1:
+                    msg: Successfully updated table
+      tags:
+        - table
+      description: Update Table by id
+  '/table/{id}/columns':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: The id of the table
+    get:
+      summary: Get All Table Columns
+      tags:
+        - table
+        - column
+      responses:
+        '200':
+          description: OK
+      operationId: get-table-id-columns
+      description: Retrieve all columns from a specific table.
+    put:
+      summary: Update Table Column
+      operationId: update-table-id-columns
+      responses:
+        '200':
+          description: OK
+      description: Update column `name` from table `id`.
+      tags:
+        - table
+        - column
+    delete:
+      summary: Delete Table Column
+      operationId: delete-table-id-columns
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: name
+          description: The name of the column
+      description: Delete column `name` from table `id`.
+      tags:
+        - table
+        - column
+  /dictionary:
+    get:
+      summary: List All Dictionary Terms
+      tags:
+        - dictionary
+      responses:
+        '200':
+          description: OK
+      operationId: get-dictionary
+      description: Get all dictionary terms.
+    post:
+      summary: Create a New Dictionary Term
+      operationId: post-dictionary
+      responses:
+        '200':
+          description: OK
+      description: Create a new dictionary term
+      tags:
+        - dictionary
+  '/dictionary/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: A dictionary term id
+    get:
+      summary: Get Specific Dictionary Term
+      tags:
+        - dictionary
+      responses:
+        '200':
+          description: OK
+      description: Retrieve a specific dictionary term.
+      operationId: get-dictionary-id
+    put:
+      summary: Update Dictionary Term
+      operationId: put-dictionary-id
+      responses:
+        '200':
+          description: OK
+      description: Update a specific dictionary term.
+      tags:
+        - dictionary
+    delete:
+      summary: Delete Dictionary Term
+      operationId: delete-dictionary-id
+      responses:
+        '200':
+          description: OK
+      parameters: []
+      description: Delete a specific dictionary term.
+      tags:
+        - dictionary
+  /tag:
+    get:
+      summary: List All Collections
+      tags:
+        - collection
+      responses:
+        '200':
+          description: OK
+      operationId: get-tag
+      description: List all collections
+    post:
+      summary: Create a new Collection
+      operationId: post-tag
+      responses:
+        '200':
+          description: OK
+      description: Create a new Collection
+      tags:
+        - collection
+  '/tag/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Get Specific Collection
+      tags:
+        - collection
+      responses:
+        '200':
+          description: OK
+      operationId: get-tag-id
+      description: Retrieve a collection by id
+    put:
+      summary: Update Collection
+      operationId: put-tag-id
+      responses:
+        '200':
+          description: OK
+      description: Update a collection by id
+      tags:
+        - collection
+    delete:
+      summary: Delete Collection
+      operationId: delete-tag-id
+      responses:
+        '200':
+          description: OK
+      tags:
+        - collection
+      description: Delete a collection by id.
+components:
+  schemas:
+    Table:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          id: 7o7y2s75ktirezg6__bigquery__secoda-web__dbt_amcewen__customers
+          neo4j_id: '7o7y2s75ktirezg6~bigquery://secoda-web.dbt_amcewen/customers'
+          created_at: None
+          updated_at: None
+          tags:
+            - 7o7y2s75ktirezg6~dbt_tag
+          name: customers
+          schema: dbt_amcewen
+          cluster: secoda-web
+          database: bigquery
+          owners: None
+          description: Description of table
+          columns:
+            - customer_id
+            - first_name
+            - last_name
+            - first_order_date
+            - most_recent_order_date
+            - number_of_orders
+          queries:
+            - description: None
+              query_text: SELECT * FROM tickets.users
+              frequency: 0
+              last_updated_timestamp: None
+              key: ''
+            - description: None
+              query_text: SELECT * FROM dbt_amcewen.customers
+              frequency: 0
+              last_updated_timestamp: None
+              key: ''
+      title: Table
+      properties:
+        id:
+          type: string
+    Dictionary:
+      title: Dictionary
+      type: object
+      properties:
+        id:
+          type: string
+    Term:
+      type: object
+      x-examples:
+        example-1:
+          name: Get Users
+          definition: user definition
+          sql: SELECT * FROM tickets.users
+          owner: kash@secoda.co
+      title: Term
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        definition:
+          type: string
+        sql:
+          type: string
+        owner:
+          type: string
+    Column:
+      title: Column
+      type: object
+      properties:
+        id:
+          type: string
+    Owner:
+      title: Owner
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+    Collection:
+      title: Collection
+      type: object
+      properties:
+        id:
+          type: string
+  securitySchemes:
+    secoda-api-key:
+      type: apiKey
+      in: header
+      description: get your API Key in the settings
+      name: Authorization
+security:
+  - secoda-api-key: []
