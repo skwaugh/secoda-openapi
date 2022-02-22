@@ -43,7 +43,9 @@ paths:
       responses:
         '200':
           description: OK
-      description: Create New Table
+      description: |-
+        Create New Table.
+        *Not yet supported*
       tags:
         - table
   '/table/{id}':
@@ -238,6 +240,14 @@ paths:
       tags:
         - collection
       description: Delete a collection by id.
+  /user/invite:
+    post:
+      summary: Invite a New User
+      operationId: post-user-invite
+      responses:
+        '200':
+          description: OK
+      description: Invite a new User.  Accepts `email` and `role`.
 components:
   schemas:
     Table:
@@ -326,6 +336,29 @@ components:
       properties:
         id:
           type: string
+    User:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          email: kash@secoda.co
+          role: Admin
+      title: User
+      properties:
+        email:
+          type: string
+          minLength: 1
+          example: kash@secoda.co
+          format: email
+        role:
+          type: string
+          enum:
+            - Admin
+            - Viewer
+            - Editor
+      required:
+        - email
+        - role
   securitySchemes:
     secoda-api-key:
       type: apiKey
